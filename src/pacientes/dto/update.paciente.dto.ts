@@ -1,11 +1,5 @@
-import { genero } from "../../prisma/generated/prisma/enums.js";
+import { PartialType } from '@nestjs/mapped-types'
+import { CreatePacienteDto } from './create.pacientes.dto.js'
 
-export class UpdatePacienteDto {
-  name_paciente: string;
-  appaterno_paciente: string;
-  apmaterno_paciente: string;
-  email: string;
-  telefono: string;
-  fecha_nacimiento: Date;
-  genero: genero;
-}
+
+export class UpdatePacienteDto extends PartialType(CreatePacienteDto){}

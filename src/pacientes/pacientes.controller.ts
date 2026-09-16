@@ -15,7 +15,7 @@ export class PacientesController {
     findOne(@Param("id") id:string){
         return this.PacientesService.findOne(+id)
     }
-    @Patch()
+    @Post()
     create(@Body() CreatePacienteDto:CreatePacienteDto){
         return this.PacientesService.create(CreatePacienteDto)
     }

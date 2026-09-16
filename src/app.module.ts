@@ -8,6 +8,7 @@ import { EspecialidadesModule } from './especialidades/especialidades.module.js'
 import { UsersModule } from './users/users.module.js';
 import { EstadoCitasModule } from './estado_citas/estado_citas.module.js';
 import { CitasModule } from './citas/citas.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
@@ -27,6 +28,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     UsersModule,
     EstadoCitasModule,
     CitasModule,
+    AuthModule,
 
   ],
   controllers: [AppController],
