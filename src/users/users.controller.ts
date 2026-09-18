@@ -1,8 +1,12 @@
+
+import { Roles } from '../auth/decorators/roles.decorators.js';
 import { Controller, Delete, Get, Param, Patch, Body, Query } from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { UpdateUserDto } from './dto/update.user.dto.js';
 
+
 @Controller('users')
+@Roles('RECEPCIONISTA','GERENCIA')
 export class UsersController {
     constructor(private readonly UsersService: UsersService){}
     @Get()

@@ -9,7 +9,9 @@ import { UsersModule } from './users/users.module.js';
 import { EstadoCitasModule } from './estado_citas/estado_citas.module.js';
 import { CitasModule } from './citas/citas.module.js';
 import { AuthModule } from './auth/auth.module.js';
-
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from './auth/guards/roles.guard.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -32,6 +34,6 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,{provide: APP_GUARD, useClass: JwtAuthGuard}, {provide:APP_GUARD,useClass: RolesGuard}],
 })
 export class AppModule {}
