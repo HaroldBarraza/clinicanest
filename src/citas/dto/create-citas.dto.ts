@@ -9,7 +9,9 @@ import {
   MinDate,
   MinLength,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger'
 export class CreateCitasDto {
+  @ApiProperty({example: 1})
   @IsInt({ message: ' el id de creador debe ser un nuemero positivo' })
   @IsPositive({ message: 'el id de creador tiene que ser un numero positivo' })
   creado_por: number;
@@ -25,12 +27,15 @@ export class CreateCitasDto {
   })
   @IsNotEmpty({ message: 'la hora de la cita es obligatorio' })
   hora_de_cita: string;
+  @ApiProperty({example: 1})
   @IsInt({ message: 'el id del medico debe ser un numero entero' })
   @IsPositive({ message: 'el id del medico tiene que ser un numero positivo' })
   id_medico: number;
+  @ApiProperty({example: 1})
   @IsInt({ message: 'el id del paciente debe ser un numero entero' })
   @IsPositive({ message: 'el id del paciente tiene que ser un numero positivo' })
   id_paciente: number;
+  @ApiProperty({example: "el paciente experimenta fuerte dolor de cabeza"})
   @IsNotEmpty({ message: 'el campo de descripcion es obligatorio' })
   @Transform(({ value }) => value?.trim())
   @IsString()
