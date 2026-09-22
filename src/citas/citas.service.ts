@@ -2,10 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateCitasDto } from './dto/create-citas.dto.js';
 import { UpdateCitasDto } from './dto/update-citas.dto.js';
+import { PacientesService } from '../pacientes/pacientes.service.js';
+
 
 @Injectable()
 export class CitasService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService, private readonly pacienteService: PacientesService) {}
   async findAll() {
     return this.prisma.citas.findMany({
       orderBy: { id_cita: 'asc' },
@@ -42,6 +44,7 @@ export class CitasService {
     });
   }
   async create(CreateCitasDto: CreateCitasDto) {
+    await this.pacienteService.findOne(CreateCitasDto.id_paciente)
     return await this.prisma.citas.create({
       data: CreateCitasDto,
     });
