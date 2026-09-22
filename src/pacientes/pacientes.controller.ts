@@ -9,7 +9,7 @@ import { UpdatePacienteDto } from './dto/update.paciente.dto.js';
 
 @Controller('pacientes')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles("RECEPCIONISTA")
+@Roles("RECEPCIONISTA", "GERENCIA")
 export class PacientesController {
     constructor(private readonly PacientesService:PacientesService) {}
 

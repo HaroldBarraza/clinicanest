@@ -21,7 +21,7 @@ export class JwtAuthGuard implements CanActivate {
     const header = request.headers.authorization;
 
     if (!header || !header.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Token no proporcionado xd');
+      throw new UnauthorizedException('Token no proporcionado');
     }
     try {
       request.user = jwt.verify(
