@@ -3,6 +3,8 @@ import * as bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { PrismaService } from '../prisma/prisma.service.js';
 import { role } from '../prisma/generated/prisma/enums.js';
+import { Public } from './decorators/public.decorator.js';
+
 
 @Injectable()
 export class AuthService {
