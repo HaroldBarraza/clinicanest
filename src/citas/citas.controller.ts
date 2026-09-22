@@ -11,9 +11,17 @@ import { CitasService } from './citas.service.js';
 import { CreateCitasDto } from './dto/create-citas.dto.js';
 import { UpdateCitasDto } from './dto/update-citas.dto.js';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorators.js';
+
 
 @ApiTags('Citas')
 @Controller('citas')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('RECEPCIONISTA','MEDICO','GERENCIA')
+
 export class CitasController {
   constructor(private readonly CitasService: CitasService) {}
   @ApiOperation({summary: "lista de todos las citas"})

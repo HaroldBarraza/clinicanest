@@ -1,10 +1,14 @@
-import { Controller, Delete, Get, Param, Patch, Body } from '@nestjs/common';
+
+import { Roles } from '../auth/decorators/roles.decorators.js';
+import { Controller, Delete, Get, Param, Patch, Body, Query } from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { UpdateUserDto } from './dto/update.user.dto.js';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
+
 @ApiTags("empleados")
 @Controller('users')
+@Roles('RECEPCIONISTA','GERENCIA')
 export class UsersController {
     constructor(private readonly UsersService: UsersService){}
     @ApiOperation({summary: "obtener la lista de todos los empleados"})
@@ -26,5 +30,9 @@ export class UsersController {
     @Delete(":id")
     remove(@Param("id") id:string){
         return this.UsersService.remove(+id)
+    }
+    @Get("medicos")
+    findMedico(@Query("especialidad") especialidad:string){
+        return this.UsersService.findEspecialidad(especialidad)
     }
 }

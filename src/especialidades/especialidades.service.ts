@@ -4,17 +4,13 @@ import { CreateEspecialidadDto } from './dto/create.especilidad.dto.js';
 
 @Injectable()
 export class EspecialidadesService {
-    constructor(private readonly prisma:PrismaService){}
-    async findAll(){
-        return this.prisma.especialidades.findMany()
-    }
-    async create(CreateEspecialidadDto:CreateEspecialidadDto){
-        try {
-            return await this.prisma.especialidades.create({
-                data:CreateEspecialidadDto,
-            })
-        } catch (error) {
-            return error
-        }
-    }
+  constructor(private readonly prisma: PrismaService) {}
+  async findAll() {
+    return this.prisma.especialidades.findMany();
+  }
+  async create(CreateEspecialidadDto: CreateEspecialidadDto) {
+    return await this.prisma.especialidades.create({
+      data: CreateEspecialidadDto,
+    });
+  }
 }
