@@ -4,9 +4,11 @@ import { Controller, Delete, Get, Param, Patch, Body, Query } from '@nestjs/comm
 import { UsersService } from './users.service.js';
 import { UpdateUserDto } from './dto/update.user.dto.js';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 
 @ApiTags("empleados")
+@ApiBearerAuth()
 @Controller('users')
 @Roles('RECEPCIONISTA','GERENCIA')
 export class UsersController {

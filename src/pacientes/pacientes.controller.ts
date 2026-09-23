@@ -6,9 +6,10 @@ import { Body, Controller, Get, Param, Post, Delete, Patch } from '@nestjs/commo
 import { PacientesService } from './pacientes.service.js';
 import { CreatePacienteDto } from './dto/create.pacientes.dto.js';
 import { UpdatePacienteDto } from './dto/update.paciente.dto.js';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags("pacientes")
+@ApiBearerAuth()
 @Controller('pacientes')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles("RECEPCIONISTA", "GERENCIA")

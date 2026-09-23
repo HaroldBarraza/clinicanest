@@ -10,7 +10,7 @@ import {
 import { CitasService } from './citas.service.js';
 import { CreateCitasDto } from './dto/create-citas.dto.js';
 import { UpdateCitasDto } from './dto/update-citas.dto.js';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { RolesGuard } from '../auth/guards/roles.guard.js';
@@ -18,6 +18,7 @@ import { Roles } from '../auth/decorators/roles.decorators.js';
 
 
 @ApiTags('Citas')
+@ApiBearerAuth()
 @Controller('citas')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('RECEPCIONISTA','MEDICO','GERENCIA')
