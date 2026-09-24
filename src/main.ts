@@ -2,9 +2,10 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule, ObserveInstrument } from './app.module.js';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from "@nestjs/common";
-import { PrismaExceptionFilter } from "./prisma/prisma-exception.filter.js";
+import { ValidationPipe } from '@nestjs/common';
+import { PrismaExceptionFilter } from './prisma/prisma-exception.filter.js';
 import { LoggingInterceptor } from './common/logging.interceptor.js';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -17,7 +18,6 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/doc', app, document);
   app.useGlobalPipes(
@@ -27,13 +27,16 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  app.useGlobalInterceptors(new LoggingInterceptor())
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted:true,
-    transform:true
-  }))
-  app.useGlobalFilters(new PrismaExceptionFilter())
-  await app.listen(process.env.PORT ?? 3000);
+  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+  app.useGlobalFilters(new PrismaExceptionFilter());
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get<number>('PORT')!);
 }
 await bootstrap();

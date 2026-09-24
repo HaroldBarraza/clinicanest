@@ -4,11 +4,14 @@ import jwt from 'jsonwebtoken'
 import { PrismaService } from '../prisma/prisma.service.js';
 import { role } from '../prisma/generated/prisma/enums.js';
 import { Public } from './decorators/public.decorator.js';
+import { ConfigService } from '@nestjs/config';
 
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService,
+    private readonly configService: ConfigService
+  ) {}
   async register(dto: {
     email: string;
     password: string;
@@ -49,12 +52,11 @@ export class AuthService {
 
     const token = jwt.sign(
       { id: user.id_empleado, email: user.email, role: user.role },
-      process.env.JWT_SECRET as string,
+      this.configService.get<string>('JWT_SECRET')!,
       
       { expiresIn: '8h' },
       
     );
-    console.log('SECRET AL FIRMAR:', JSON.stringify(process.env.JWT_SECRET))
 
     return { token };
   }
