@@ -18,16 +18,16 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       case 'P2001':
         return response
           .status(404)
-          .json({ status_code: 404, message: 'Registro no encontrado' });
+          .json({ status_Code: 404, message: 'Registro no encontrado' });
       case 'P2002':
         return response.status(409).json({
-          status_code: 404,
+          status_Code: 409,
           message: 'Ya existe un registro con ese valor unico',
         });
       case 'P2025':
         return response
           .status(404)
-          .json({ status_code: 404, message: 'Registro no encontrado' });
+          .json({ status_Code: 404, message: 'Registro no encontrado' });
 
       default:
         throw exception;

@@ -11,11 +11,6 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 export class CreateCitasDto {
-  @ApiProperty({ example: 1 })
-  @IsInt({ message: ' el id de creador debe ser un nuemero positivo' })
-  @IsPositive({ message: 'el id de creador tiene que ser un numero positivo' })
-  creado_por: number;
-
   @ApiProperty({ example: '2026-10-01' })
   @Transform(({ value }) => new Date(value))
   @IsDate()
