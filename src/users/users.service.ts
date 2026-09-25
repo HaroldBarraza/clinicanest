@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { UpdateUserDto } from './dto/update.user.dto.js';
 
@@ -6,7 +6,11 @@ import { UpdateUserDto } from './dto/update.user.dto.js';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
   findAll() {
-    return this.prisma.users.findMany();
+    return this.prisma.users.findMany({
+      omit:{
+        password:true
+      }
+    });
   }
   async findOne(id_empleado: number) {
     const user = await this.prisma.users.findUnique({
@@ -19,6 +23,32 @@ export class UsersService {
       throw new NotFoundException(`el empleado con ${id_empleado} no existe`);
     }
     return user;
+  }
+  async findMedico(id_empleado:number){
+    const user = await this.prisma.users.findUnique({
+      where:{id_empleado},
+      include:{especialidades:true},
+    })
+    if(!user){
+      throw new NotFoundException(`el medico no existe`)
+    }
+    if(user.role !== "MEDICO"){
+      throw new NotFoundException(`el empleado con id ${id_empleado} no es medico`)
+    }
+    return user
+  }
+    async findCreater(id_empleado:number){
+    const user = await this.prisma.users.findUnique({
+      where:{id_empleado},
+      include:{especialidades:true},
+    })
+    if(!user){
+      throw new ForbiddenException(`el empleado no existe`)
+    }
+    if(user.role === "MEDICO"){
+      throw new NotFoundException(`el empleado con id ${id_empleado} no tiene permiso para crear una cita`)
+    }
+    return user
   }
   async update(id_empleado: number, UpdateUserDto: UpdateUserDto) {
     const user = await this.prisma.users.findUnique({
