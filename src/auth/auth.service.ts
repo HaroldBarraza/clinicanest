@@ -20,7 +20,7 @@ export class AuthService {
     appaterno: string;
     appmaterno: string;
     telefono: string;
-    id_especialidad?: number; // opcional si no todos tienen especialidad
+    id_especialidad?: number;
   }) {
     const passwordHash = await bcrypt.hash(dto.password, 10);
 
